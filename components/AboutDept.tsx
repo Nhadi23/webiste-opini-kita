@@ -1,0 +1,113 @@
+import React from 'react';
+import { Users, BookOpen, Scroll, ArrowLeft } from 'lucide-react';
+
+interface Member {
+  name: string;
+  role: string;
+  nim: string;
+  image: string;
+}
+
+// Mock data for 8 members
+const MEMBERS: Member[] = [
+  { name: "Ahmad Fauzan", role: "Ketua Departemen", nim: "40201201", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&q=80" },
+  { name: "Siti Nurhaliza", role: "Sekretaris", nim: "40201202", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&q=80" },
+  { name: "Rizal Mantovani", role: "Bendahara", nim: "40201203", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&q=80" },
+  { name: "Dewi Sartika", role: "Ka. Div. Kajian", nim: "40201204", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&q=80" },
+  { name: "Budi Santoso", role: "Ka. Div. Diskusi", nim: "40201205", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&q=80" },
+  { name: "Rina Wati", role: "Anggota Kajian", nim: "40201206", image: "https://images.unsplash.com/photo-1554151228-14d9def656ec?w=400&h=400&fit=crop&q=80" },
+  { name: "Fajar Nugraha", role: "Anggota Diskusi", nim: "40201207", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&q=80" },
+  { name: "Anisa Rahma", role: "Publikasi", nim: "40201208", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&q=80" },
+];
+
+interface AboutDeptProps {
+  onBack: () => void;
+}
+
+export const AboutDept: React.FC<AboutDeptProps> = ({ onBack }) => {
+  return (
+    <div className="max-w-5xl mx-auto animate-in fade-in duration-700">
+      
+      {/* Navigation */}
+      <button 
+        onClick={onBack}
+        className="group flex items-center gap-2 text-ink-light hover:text-accent mb-6 font-mono text-sm transition-colors"
+      >
+        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+        Kembali ke Beranda
+      </button>
+
+      {/* Hero Section - Department Profile */}
+      <div className="bg-white border-2 border-ink shadow-[8px_8px_0px_0px_rgba(45,42,38,0.15)] p-8 md:p-12 mb-12 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 opacity-10">
+          <BookOpen size={120} />
+        </div>
+        
+        <div className="relative z-10 text-center md:text-left">
+          <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+            <Scroll className="text-accent" size={24} />
+            <span className="font-mono text-xs uppercase tracking-[0.3em] font-bold text-ink-light">Tentang Kami</span>
+          </div>
+          
+          <h1 className="font-serif text-4xl md:text-5xl font-bold text-ink mb-6">
+            Departemen Riset & Diskusi
+          </h1>
+          
+          <div className="max-w-2xl text-ink/80 font-serif text-lg leading-relaxed space-y-4">
+            <p>
+              <span className="text-4xl float-left mr-2 font-bold text-accent">B</span>
+              erdiri sebagai garda terdepan dalam membudayakan nalar kritis di lingkungan Universitas Darussalam Gontor. 
+              Kami memfasilitasi mahasiswa untuk menyelami samudra ilmu pengetahuan melalui kajian mendalam, diskusi dialektis, 
+              dan publikasi ilmiah yang beradab.
+            </p>
+            <p className="border-l-2 border-accent/30 pl-4 italic text-ink/60 text-base">
+              "Menghidupkan tradisi intelektual Islam di era kontemporer."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Organization Chart / Members Grid */}
+      <div className="mb-12">
+        <div className="flex items-center gap-4 mb-8 justify-center">
+            <div className="h-px bg-ink/20 w-12"></div>
+            <div className="flex items-center gap-2 font-serif text-xl font-bold text-ink">
+                <Users size={20} />
+                <span>Susunan Pengurus 2025-2026</span>
+            </div>
+            <div className="h-px bg-ink/20 w-12"></div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {MEMBERS.map((member, index) => (
+            <div key={index} className="group bg-paper border border-ink/10 p-4 text-center hover:border-accent/50 transition-all hover:-translate-y-1 duration-300">
+              {/* Photo Frame */}
+              <div className="w-32 h-32 mx-auto mb-4 relative rounded-full border-4 border-white shadow-md overflow-hidden group-hover:shadow-lg transition-shadow">
+                 {/* Sepia Filter Overlay */}
+                 <div className="absolute inset-0 bg-sepia mix-blend-color opacity-50 group-hover:opacity-0 transition-opacity z-10"></div>
+                 <div className="absolute inset-0 bg-ink mix-blend-overlay opacity-20 group-hover:opacity-0 transition-opacity z-10"></div>
+                 
+                 <img 
+                  src={member.image} 
+                  alt={member.name}
+                  className="w-full h-full object-cover filter contrast-[0.9] grayscale-[0.8] group-hover:grayscale-0 group-hover:contrast-100 transition-all duration-500"
+                 />
+              </div>
+
+              <h3 className="font-serif text-lg font-bold text-ink mb-1 group-hover:text-accent transition-colors">
+                {member.name}
+              </h3>
+              <div className="w-8 h-px bg-ink/20 mx-auto mb-2"></div>
+              <p className="font-mono text-xs text-ink-light uppercase tracking-wider font-bold mb-1">
+                {member.role}
+              </p>
+              <p className="font-mono text-[10px] text-ink/40">
+                NIM: {member.nim}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
