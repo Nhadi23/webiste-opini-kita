@@ -19,7 +19,9 @@ export enum ViewState {
   WRITE = 'WRITE',
   READ = 'READ',
   LOGIN = 'LOGIN',
-  ABOUT_DEPT = 'ABOUT_DEPT'
+  ABOUT_DEPT = 'ABOUT_DEPT',
+  PROFILE = 'PROFILE',
+  DASHBOARD = 'DASHBOARD'
 }
 
 export interface AIFeedback {

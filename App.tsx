@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Header } from './components/Header';
-import { Footer } from './components/Footer'; // Import Footer
+import { Footer } from './components/Footer';
 import { HomePage } from './components/HomePage';
 import { OpinionForm } from './components/OpinionForm';
 import { ArticleView } from './components/ArticleView';
 import { LoginForm } from './components/LoginForm';
 import { AboutDept } from './components/AboutDept';
+import { AuthorProfile } from './components/AuthorProfile';
+import { WriterDashboard } from './components/WriterDashboard'; // Import Dashboard
 import { Opinion, ViewState, User } from './types';
 
 // Mock initial data with Aesthetic Images
@@ -46,11 +48,12 @@ export const App: React.FC = () => {
   const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [opinions, setOpinions] = useState<Opinion[]>(INITIAL_OPINIONS);
   const [selectedOpinion, setSelectedOpinion] = useState<Opinion | null>(null);
+  const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
   // Protected Route Logic
   const handleChangeView = (newView: ViewState) => {
-    if (newView === ViewState.WRITE && !user) {
+    if ((newView === ViewState.WRITE || newView === ViewState.DASHBOARD) && !user) {
       setView(ViewState.LOGIN);
     } else {
       setView(newView);
@@ -60,7 +63,7 @@ export const App: React.FC = () => {
 
   const handleLogin = (newUser: User) => {
     setUser(newUser);
-    setView(ViewState.WRITE); // Redirect to write page after login
+    setView(ViewState.DASHBOARD); // Redirect to dashboard after login
     window.scrollTo(0, 0);
   };
 
@@ -77,12 +80,24 @@ export const App: React.FC = () => {
       imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop"
     };
     setOpinions([opinion, ...opinions]);
-    setView(ViewState.HOME);
+    setView(ViewState.DASHBOARD); // Return to dashboard after creating
+    window.scrollTo(0, 0);
+  };
+
+  const handleDeleteOpinion = (id: string) => {
+    setOpinions(opinions.filter(op => op.id !== id));
   };
 
   const handleReadOpinion = (opinion: Opinion) => {
     setSelectedOpinion(opinion);
     setView(ViewState.READ);
+    window.scrollTo(0, 0);
+  };
+
+  const handleAuthorClick = (authorName: string) => {
+    setSelectedAuthor(authorName);
+    setView(ViewState.PROFILE);
+    window.scrollTo(0, 0);
   };
 
   const handleFooterNav = (view: ViewState) => {
@@ -101,7 +116,11 @@ export const App: React.FC = () => {
 
       {/* Main Content Router */}
       {view === ViewState.HOME && (
-        <HomePage opinions={opinions} onRead={handleReadOpinion} />
+        <HomePage 
+          opinions={opinions} 
+          onRead={handleReadOpinion} 
+          onAuthorClick={handleAuthorClick}
+        />
       )}
 
       {view !== ViewState.HOME && (
@@ -117,7 +136,7 @@ export const App: React.FC = () => {
               <OpinionForm 
                 currentUser={user}
                 onSubmit={handleCreateOpinion} 
-                onCancel={() => setView(ViewState.HOME)} 
+                onCancel={() => setView(ViewState.DASHBOARD)} 
               />
             </div>
           )}
@@ -126,13 +145,33 @@ export const App: React.FC = () => {
             <div className="animate-in slide-in-from-bottom-4 duration-500">
               <ArticleView 
                 opinion={selectedOpinion} 
-                onBack={() => setView(ViewState.HOME)} 
+                onBack={() => setView(ViewState.HOME)}
+                onAuthorClick={handleAuthorClick}
               />
             </div>
           )}
 
           {view === ViewState.ABOUT_DEPT && (
             <AboutDept onBack={() => setView(ViewState.HOME)} />
+          )}
+
+          {view === ViewState.PROFILE && selectedAuthor && (
+            <AuthorProfile 
+              authorName={selectedAuthor} 
+              allOpinions={opinions} 
+              onBack={() => setView(ViewState.HOME)}
+              onRead={handleReadOpinion}
+            />
+          )}
+
+          {view === ViewState.DASHBOARD && user && (
+            <WriterDashboard 
+              user={user}
+              opinions={opinions}
+              onWriteNew={() => setView(ViewState.WRITE)}
+              onRead={handleReadOpinion}
+              onDelete={handleDeleteOpinion}
+            />
           )}
         </main>
       )}

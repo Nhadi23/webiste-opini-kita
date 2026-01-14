@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewState, User } from '../types';
-import { PenTool, Home, LogIn, LogOut, User as UserIcon } from 'lucide-react';
+import { PenTool, Home, LogIn, LogOut, LayoutDashboard, User as UserIcon } from 'lucide-react';
 
 interface HeaderProps {
   currentView: ViewState;
@@ -37,16 +37,30 @@ export const Header: React.FC<HeaderProps> = ({ currentView, user, onChangeView,
                 <span className="text-sm">Beranda</span>
             </button>
             
+            {user && (
+                <button
+                    onClick={() => onChangeView(ViewState.DASHBOARD)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-serif transition-all ${
+                    currentView === ViewState.DASHBOARD
+                        ? 'bg-ink text-paper shadow-md'
+                        : 'text-ink hover:bg-ink/5'
+                    }`}
+                >
+                    <LayoutDashboard size={16} />
+                    <span className="text-sm">Meja Redaksi</span>
+                </button>
+            )}
+
             <button
                 onClick={() => onChangeView(ViewState.WRITE)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full font-serif transition-all ${
-                currentView === ViewState.WRITE || currentView === ViewState.LOGIN
+                currentView === ViewState.WRITE
                     ? 'bg-ink text-paper shadow-md'
                     : 'text-ink hover:bg-ink/5'
                 }`}
             >
                 <PenTool size={16} />
-                <span className="text-sm">Tulis Opini</span>
+                <span className="text-sm">Tulis</span>
             </button>
             </nav>
 
@@ -54,10 +68,13 @@ export const Header: React.FC<HeaderProps> = ({ currentView, user, onChangeView,
             <div className="flex items-center border-l-2 border-ink/10 pl-4 ml-2">
                 {user ? (
                     <div className="flex items-center gap-3">
-                        <div className="text-right hidden sm:block">
-                            <p className="font-serif text-sm font-bold text-ink">{user.name}</p>
+                        <button 
+                            onClick={() => onChangeView(ViewState.DASHBOARD)}
+                            className="text-right hidden sm:block group cursor-pointer"
+                        >
+                            <p className="font-serif text-sm font-bold text-ink group-hover:text-accent transition-colors">{user.name}</p>
                             <p className="font-mono text-[10px] text-ink-light">{user.nim}</p>
-                        </div>
+                        </button>
                         <button 
                             onClick={onLogout}
                             className="p-2 text-ink hover:text-accent transition-colors rounded-full hover:bg-ink/5"

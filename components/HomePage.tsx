@@ -5,9 +5,10 @@ import { OpinionList } from './OpinionList';
 interface HomePageProps {
   opinions: Opinion[];
   onRead: (opinion: Opinion) => void;
+  onAuthorClick: (authorName: string) => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ opinions, onRead }) => {
+export const HomePage: React.FC<HomePageProps> = ({ opinions, onRead, onAuthorClick }) => {
   return (
     <div className="animate-in fade-in duration-700">
       {/* Hero Section - UNIDA Gontor Aesthetic Vibe */}
@@ -46,7 +47,7 @@ export const HomePage: React.FC<HomePageProps> = ({ opinions, onRead }) => {
           <div className="h-px bg-ink/20 flex-grow"></div>
         </div>
 
-        <OpinionList opinions={opinions} onRead={onRead} />
+        <OpinionList opinions={opinions} onRead={onRead} onAuthorClick={onAuthorClick} />
       </main>
     </div>
   );

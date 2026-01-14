@@ -5,14 +5,13 @@ import { ArticleTemplate } from './ArticleTemplate';
 interface ArticleViewProps {
   opinion: Opinion;
   onBack: () => void;
+  onAuthorClick?: (authorName: string) => void;
 }
 
-export const ArticleView: React.FC<ArticleViewProps> = ({ opinion, onBack }) => {
-  // Logic layer can be added here in the future (e.g., fetch related articles, comments, analytics)
-  
+export const ArticleView: React.FC<ArticleViewProps> = ({ opinion, onBack, onAuthorClick }) => {
   return (
     <div className="container mx-auto">
-        <ArticleTemplate opinion={opinion} onBack={onBack} />
+        <ArticleTemplate opinion={opinion} onBack={onBack} onAuthorClick={onAuthorClick} />
     </div>
   );
 };

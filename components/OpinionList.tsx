@@ -5,9 +5,18 @@ import { User, Calendar, ArrowRight } from 'lucide-react';
 interface OpinionListProps {
   opinions: Opinion[];
   onRead: (opinion: Opinion) => void;
+  onAuthorClick?: (authorName: string) => void;
 }
 
-export const OpinionList: React.FC<OpinionListProps> = ({ opinions, onRead }) => {
+export const OpinionList: React.FC<OpinionListProps> = ({ opinions, onRead, onAuthorClick }) => {
+  
+  const handleAuthorClick = (e: React.MouseEvent, author: string) => {
+    e.stopPropagation(); // Prevent triggering the card click
+    if (onAuthorClick) {
+        onAuthorClick(author);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
       {opinions.map((op) => (
@@ -45,10 +54,14 @@ export const OpinionList: React.FC<OpinionListProps> = ({ opinions, onRead }) =>
             </p>
 
             <div className="mt-auto border-t border-dashed border-ink/20 pt-4 flex items-center justify-between font-mono text-xs text-ink-light">
-              <div className="flex items-center gap-2">
+              <button 
+                onClick={(e) => handleAuthorClick(e, op.author)}
+                className="flex items-center gap-2 hover:text-accent transition-colors z-20"
+                title="Lihat Profil Penulis"
+              >
                 <User size={12} />
-                <span>{op.author}</span>
-              </div>
+                <span className="font-bold border-b border-transparent hover:border-accent">{op.author}</span>
+              </button>
               <div className="flex items-center gap-2">
                 <Calendar size={12} />
                 <span>{op.date}</span>

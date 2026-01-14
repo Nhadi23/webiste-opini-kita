@@ -1,13 +1,14 @@
 import React from 'react';
 import { Opinion } from '../types';
-import { ArrowLeft, Share2, Printer, Bookmark } from 'lucide-react';
+import { ArrowLeft, Share2, Printer, Bookmark, User } from 'lucide-react';
 
 interface ArticleTemplateProps {
   opinion: Opinion;
   onBack: () => void;
+  onAuthorClick?: (authorName: string) => void;
 }
 
-export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ opinion, onBack }) => {
+export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ opinion, onBack, onAuthorClick }) => {
   return (
     <article className="max-w-4xl mx-auto bg-white shadow-[0_0_15px_rgba(0,0,0,0.1)] min-h-screen md:min-h-0 md:my-8 relative animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Decorative Elements */}
@@ -44,8 +45,15 @@ export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ opinion, onBac
           </h1>
           
           <div className="flex flex-col items-center gap-2 font-serif text-ink-light">
-            <div className="text-lg italic">
-                Oleh <span className="font-bold text-ink not-italic border-b border-accent/30">{opinion.author}</span>
+            <div className="text-lg italic flex items-center gap-2">
+                <span>Oleh</span>
+                <button 
+                    onClick={() => onAuthorClick && onAuthorClick(opinion.author)}
+                    className="font-bold text-ink not-italic border-b border-accent/30 hover:text-accent hover:border-accent transition-all flex items-center gap-1 group"
+                >
+                    <User size={16} className="opacity-0 group-hover:opacity-100 transition-opacity -ml-4" />
+                    {opinion.author}
+                </button>
             </div>
             <div className="font-mono text-xs text-ink/40 uppercase tracking-widest mt-1">
                 {opinion.date} • Universitas Darussalam Gontor
