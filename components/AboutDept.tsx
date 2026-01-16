@@ -12,11 +12,11 @@ interface Member {
 const MEMBERS: Member[] = [
   { name: "M. Bili Saputra", role: "Ketua Departemen", nim: "40201201", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBQS9nH_xNUOJQNsM_x-XR_jPyb_-Kye_MNX0SsPVrgXyi7T-Ds5SzN6MRvAAKiDfY_p_btfNdl9f5C-wylglOxLhmo6BrNBeG7BpurLywIQlOloC0z1uKoAC9DGDyP0VfOWcAjnvCOoGMUWQXEX67MKyRoUraPIQul-1bAZmi9iQHzDr-X8gRw76KyLrR/w259-h400/WhatsApp%20Image%202026-01-14%20at%2020.50.47.jpeg" },
   { name: "M. Azrul Amirullah", role: "Ketua Departemen", nim: "40201202", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGCS5daJrLHHUJ7XGPiD1Y5JmiJX6F_p8S6i50NzSYcprEjZfIbwIvMNf2FN5GGTtdFn6nIUaqeb15IB9BYkalHSqJqYk9iU8hUUm2iXdUBNR5AtHjpJOEA56xgxeZJktRQVut4wmvMhFKdjzu2pCY4aFjST9oRfq5VMa8PY_B9JlOkmplYLrD67FtDan6/s868/WhatsApp%20Image%202026-01-14%20at%2021.12.46.jpeg" },
-  { name: "Ahmad Nugrahadi", role: "Publikasi", nim: "40201203", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgun4Y5k1rgNs4AMTn3O3AZIKpHPRw9NXd8zcv9LBa2GJUS6SVXA9QhlX8Qv5lqmRnuNxX1H9M2XPDZPMOwbOxtqiiu3oRYV6c9gdtEZ6Zi974dJfqm3Oio3TtaSyiJMd1eiXOMmAlSpm5Sz1M4WPDCkjlU_hh7FwGyMbG1sny_QxcUVTwpRshahnVX1_03/s2204/PXL_20240921_071848917.MP.jpg" },
+  { name: "Ahmad Nugrahadi", role: "Div. Publikasi", nim: "442023611092", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgun4Y5k1rgNs4AMTn3O3AZIKpHPRw9NXd8zcv9LBa2GJUS6SVXA9QhlX8Qv5lqmRnuNxX1H9M2XPDZPMOwbOxtqiiu3oRYV6c9gdtEZ6Zi974dJfqm3Oio3TtaSyiJMd1eiXOMmAlSpm5Sz1M4WPDCkjlU_hh7FwGyMbG1sny_QxcUVTwpRshahnVX1_03/s2204/PXL_20240921_071848917.MP.jpg" },
+  { name: "Raihan M. Firdaus", role: "Div. Publikasi", nim: "40201207", image: "" },
   { name: "Alfan Arif Rabbani", role: "Div. Kajian", nim: "40201204", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&q=80" },
   { name: "Najamuddin Al-Farabi", role: "Div. Kajian", nim: "40201205", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&q=80" },
-  { name: "Muhammad Ihsan", role: "Div. Kajian", nim: "40201206", image: "" },
-  { name: "Raihan M. Firdaus", role: "Div. Diskusi", nim: "40201207", image: "" },
+  { name: "Muhammad Ihsan", role: "Div. Diskusi", nim: "40201206", image: "" },
   { name: "Ali Fauzan", role: "Div. Diskusi", nim: "40201208", image: "" },
 ];
 
