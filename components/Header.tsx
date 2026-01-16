@@ -37,31 +37,34 @@ export const Header: React.FC<HeaderProps> = ({ currentView, user, onChangeView,
                 <span className="text-sm">Beranda</span>
             </button>
             
-            {user && (
-                <button
-                    onClick={() => onChangeView(ViewState.DASHBOARD)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-serif transition-all ${
-                    currentView === ViewState.DASHBOARD
-                        ? 'bg-ink text-paper shadow-md'
-                        : 'text-ink hover:bg-ink/5'
-                    }`}
-                >
-                    <LayoutDashboard size={16} />
-                    <span className="text-sm">Meja Redaksi</span>
-                </button>
-            )}
+            {/* Only show Dashboard and Write for MAHASISWA */}
+            {user && user.role === 'MAHASISWA' && (
+                <>
+                    <button
+                        onClick={() => onChangeView(ViewState.DASHBOARD)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full font-serif transition-all ${
+                        currentView === ViewState.DASHBOARD
+                            ? 'bg-ink text-paper shadow-md'
+                            : 'text-ink hover:bg-ink/5'
+                        }`}
+                    >
+                        <LayoutDashboard size={16} />
+                        <span className="text-sm">Meja Redaksi</span>
+                    </button>
 
-            <button
-                onClick={() => onChangeView(ViewState.WRITE)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-serif transition-all ${
-                currentView === ViewState.WRITE
-                    ? 'bg-ink text-paper shadow-md'
-                    : 'text-ink hover:bg-ink/5'
-                }`}
-            >
-                <PenTool size={16} />
-                <span className="text-sm">Tulis</span>
-            </button>
+                    <button
+                        onClick={() => onChangeView(ViewState.WRITE)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full font-serif transition-all ${
+                        currentView === ViewState.WRITE
+                            ? 'bg-ink text-paper shadow-md'
+                            : 'text-ink hover:bg-ink/5'
+                        }`}
+                    >
+                        <PenTool size={16} />
+                        <span className="text-sm">Tulis</span>
+                    </button>
+                </>
+            )}
             </nav>
 
             {/* Auth Status */}
@@ -69,11 +72,13 @@ export const Header: React.FC<HeaderProps> = ({ currentView, user, onChangeView,
                 {user ? (
                     <div className="flex items-center gap-3">
                         <button 
-                            onClick={() => onChangeView(ViewState.DASHBOARD)}
-                            className="text-right hidden sm:block group cursor-pointer"
+                            onClick={() => user.role === 'MAHASISWA' ? onChangeView(ViewState.DASHBOARD) : null}
+                            className={`text-right hidden sm:block group ${user.role === 'MAHASISWA' ? 'cursor-pointer' : 'cursor-default'}`}
                         >
                             <p className="font-serif text-sm font-bold text-ink group-hover:text-accent transition-colors">{user.name}</p>
-                            <p className="font-mono text-[10px] text-ink-light">{user.nim}</p>
+                            <p className="font-mono text-[10px] text-ink-light">
+                                {user.role === 'MAHASISWA' ? user.id : 'TAMU'}
+                            </p>
                         </button>
                         <button 
                             onClick={onLogout}
@@ -85,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, user, onChangeView,
                     </div>
                 ) : (
                     <button
-                        onClick={() => onChangeView(ViewState.LOGIN)}
+                        onClick={() => onChangeView(ViewState.LOGIN_STUDENT)}
                         className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider font-bold text-ink hover:text-accent transition-colors"
                     >
                         <LogIn size={14} />

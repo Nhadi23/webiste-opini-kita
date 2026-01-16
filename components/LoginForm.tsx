@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import { User } from '../types';
-import { KeyRound, School } from 'lucide-react';
+import { KeyRound, School, BookUser } from 'lucide-react';
 
 interface LoginFormProps {
   onLogin: (user: User) => void;
+  onSwitchToGuest: () => void;
   onCancel: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onCancel }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSwitchToGuest, onCancel }) => {
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && nim) {
-      onLogin({ name, nim });
+      onLogin({ 
+          name, 
+          id: nim,
+          role: 'MAHASISWA'
+      });
     }
   };
 
   return (
-    <div className="max-w-md mx-auto my-12 relative">
+    <div className="max-w-md mx-auto my-12 relative animate-in zoom-in-95 duration-300">
       {/* Decorative vintage card effect */}
       <div className="bg-[#fcfbf9] p-8 border-4 border-double border-ink/20 shadow-[8px_8px_0px_0px_rgba(45,42,38,0.15)] relative overflow-hidden transform rotate-1">
         
@@ -71,13 +76,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onCancel }) => {
             </button>
           </div>
           
-          <button
-            type="button"
-            onClick={onCancel}
-            className="w-full text-center text-xs font-mono text-ink/40 hover:text-accent mt-4 underline decoration-dotted"
-          >
-            Batalkan dan Kembali ke Beranda
-          </button>
+          <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-dashed border-ink/10">
+            <button
+                type="button"
+                onClick={onSwitchToGuest}
+                className="w-full text-center text-sm font-serif font-bold text-ink hover:text-accent flex items-center justify-center gap-2 p-2 rounded hover:bg-ink/5 transition-colors"
+            >
+                <BookUser size={14} />
+                Bukan Mahasiswa? Isi Buku Tamu
+            </button>
+            <button
+                type="button"
+                onClick={onCancel}
+                className="w-full text-center text-xs font-mono text-ink/40 hover:text-accent underline decoration-dotted"
+            >
+                Kembali ke Beranda
+            </button>
+          </div>
         </form>
       </div>
       

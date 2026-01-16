@@ -1,14 +1,27 @@
 import React from 'react';
-import { Opinion } from '../types';
-import { ArrowLeft, Share2, Printer, Bookmark, User } from 'lucide-react';
+import { Opinion, Comment, User } from '../types';
+import { ArrowLeft, Share2, Printer, Bookmark, User as UserIcon } from 'lucide-react';
+import { CommentSection } from './CommentSection';
 
 interface ArticleTemplateProps {
   opinion: Opinion;
+  currentUser: User | null;
+  comments: Comment[];
   onBack: () => void;
   onAuthorClick?: (authorName: string) => void;
+  onAddComment: (content: string) => void;
+  onLoginRequest: () => void;
 }
 
-export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ opinion, onBack, onAuthorClick }) => {
+export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ 
+    opinion, 
+    currentUser,
+    comments,
+    onBack, 
+    onAuthorClick,
+    onAddComment,
+    onLoginRequest
+}) => {
   return (
     <article className="max-w-4xl mx-auto bg-white shadow-[0_0_15px_rgba(0,0,0,0.1)] min-h-screen md:min-h-0 md:my-8 relative animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Decorative Elements */}
@@ -51,7 +64,7 @@ export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ opinion, onBac
                     onClick={() => onAuthorClick && onAuthorClick(opinion.author)}
                     className="font-bold text-ink not-italic border-b border-accent/30 hover:text-accent hover:border-accent transition-all flex items-center gap-1 group"
                 >
-                    <User size={16} className="opacity-0 group-hover:opacity-100 transition-opacity -ml-4" />
+                    <UserIcon size={16} className="opacity-0 group-hover:opacity-100 transition-opacity -ml-4" />
                     {opinion.author}
                 </button>
             </div>
@@ -109,6 +122,14 @@ export const ArticleTemplate: React.FC<ArticleTemplateProps> = ({ opinion, onBac
              </button>
           </div>
         </footer>
+
+        {/* Comment Section */}
+        <CommentSection 
+            comments={comments}
+            currentUser={currentUser}
+            onAddComment={onAddComment}
+            onLoginRequest={onLoginRequest}
+        />
       </div>
     </article>
   );
